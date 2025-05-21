@@ -58,7 +58,7 @@ const Navbar = () => {
               <div className="hidden sm:block text-sm text-base-content/70 font-medium px-4 py-1 rounded-lg bg-base-200">
                 👋 Welcome, {user.firstName}
               </div>
-              {/* Profile Dropdown */}
+              {/* Profile Dropdown hameburger */}
               <div className="dropdown dropdown-end">
                 <div
                   tabIndex={0}
