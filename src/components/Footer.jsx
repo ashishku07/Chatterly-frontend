@@ -27,7 +27,7 @@ const Footer = () => {
               <span>📩</span>
               <span>
                 <span className="opacity-80">Email:</span>{" "}
-                <span className="text-blue-400">yourname@example.com</span>
+                <span className="text-blue-400">shamst0026@gmail.com</span>
               </span>
             </li>
             <li className="flex items-center gap-2 md:justify-end">
@@ -35,12 +35,12 @@ const Footer = () => {
               <span>
                 <span className="opacity-80">LinkedIn:</span>{" "}
                 <a
-                  href="https://www.linkedin.com/in/akshadsantoshjaiswal"
+                  href="https://www.linkedin.com/in/shams-tabrez-169829167/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-400 hover:underline"
                 >
-                  @akshadjaiswal
+                  Shams Tabrez
                 </a>
               </span>
             </li>
@@ -57,7 +57,7 @@ const Footer = () => {
           <div className="flex md:justify-end gap-5 pt-3">
             {/* GitHub */}
             <a
-              href="https://github.com/akshadjaiswal"
+              href="https://github.com/Shams261"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -83,7 +83,7 @@ const Footer = () => {
 
             {/* LinkedIn */}
             <a
-              href="https://www.linkedin.com/in/akshadsantoshjaiswal"
+              href="https://www.linkedin.com/in/shams-tabrez-169829167/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
