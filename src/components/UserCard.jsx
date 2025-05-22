@@ -23,10 +23,10 @@ const UserCard = ({ user }) => {
   };
 
   return (
-    <div className="card w-96 bg-base-200 text-base-content border border-base-300 shadow-md hover:shadow-xl transition-shadow duration-300 rounded-xl overflow-hidden">
+    <div className="card w-96 bg-base-200 p-7 text-base-content border border-base-300 shadow-md hover:shadow-xl transition-shadow duration-300 rounded-xl overflow-hidden">
       {/* Profile Image */}
       <figure className="px-6 pt-6">
-        <div className="relative w-full h-64 overflow-hidden rounded-xl border border-base-300">
+        <div className="relative w-full h-40 overflow-hidden rounded-xl border border-base-300">
           <img
             src={photoURL}
             alt={`${firstName} ${lastName}`}
