@@ -5,21 +5,16 @@ import { useDispatch } from "react-redux";
 import { removeUserFromFeed } from "../utils/feedSlice";
 
 const UserCard = ({ user }) => {
-  console.log(user);
   const dispatch = useDispatch();
   const { _id, firstName, lastName, age, gender, about, photoURL, skills } =
     user;
 
-  console.log("Extracted Skills:", skills); // Debugging
-
   const handleSendRequest = async (status, userId) => {
     try {
-      const res = await axios.post(
-        BASE_URL + "/request/send/" + status + "/" + userId,
+      await axios.post(
+        `${BASE_URL}/request/send/${status}/${userId}`,
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       dispatch(removeUserFromFeed(userId));
     } catch (error) {
@@ -28,22 +23,61 @@ const UserCard = ({ user }) => {
   };
 
   return (
-    <div className="card grid-rows-1 bg-base-300 w-96 shadow-xl p-3">
-      <figure>
-        <img src={photoURL} alt="Shoes" />
+    <div className="card w-96 bg-base-200 text-base-content border border-base-300 shadow-md hover:shadow-xl transition-shadow duration-300 rounded-xl overflow-hidden">
+      {/* Profile Image */}
+      <figure className="px-6 pt-6">
+        <div className="relative w-full h-64 overflow-hidden rounded-xl border border-base-300">
+          <img
+            src={photoURL}
+            alt={`${firstName} ${lastName}`}
+            className="w-full h-full object-cover"
+          />
+        </div>
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">{firstName + " " + lastName}</h2>
-        {age && gender && <p>{age + ", " + gender}</p>}
-        <p>{about}</p>
+
+      {/* Card Body */}
+      <div className="card-body px-6 py-5 space-y-4">
+        {/* Name */}
+        <h2 className="text-xl font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          {firstName} {lastName}
+        </h2>
+
+        {/* Age & Gender */}
+        {(age || gender) && (
+          <div>
+            <h3 className="text-xs font-semibold text-base-content/60 uppercase tracking-wide mb-1">
+              Basic Info
+            </h3>
+            <p className="text-sm text-base-content/70">
+              {age && `${age} years`}
+            </p>
+            <p className="text-sm text-base-content/70">{gender}</p>
+          </div>
+        )}
+
+        {/* About */}
+        {about && (
+          <div>
+            <h3 className="text-xs font-semibold text-base-content/60 uppercase tracking-wide mb-1">
+              About
+            </h3>
+            <p className="text-sm text-base-content/80 leading-relaxed">
+              {about}
+            </p>
+          </div>
+        )}
+
+        {/* Skills */}
         {skills && skills.length > 0 && (
           <div>
-            <h3 className="font-semibold">Skills:</h3>
+            <h3 className="text-xs font-semibold text-base-content/60 uppercase tracking-wide mb-1">
+              Skills
+            </h3>
             <div className="flex flex-wrap gap-2">
-              {skills.map((skill, index) => (
+              {skills.map((skill, idx) => (
                 <span
-                  key={index}
-                  className="bg-blue-200 text-blue-700 px-2 py-1 rounded-lg text-sm"
+                  key={idx}
+                  className="px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md hover:scale-105 transition-transform"
                 >
                   {skill.trim()}
                 </span>
@@ -51,22 +85,20 @@ const UserCard = ({ user }) => {
             </div>
           </div>
         )}
-        <div className="card-actions justify-center my-4">
+
+        {/* Action Buttons */}
+        <div className="card-actions justify-between mt-6">
           <button
-            className="btn btn-accent"
-            onClick={() => {
-              handleSendRequest("ignored", _id);
-            }}
+            onClick={() => handleSendRequest("ignored", _id)}
+            className="px-4 py-2 text-sm font-semibold rounded-lg border border-error text-error hover:bg-error hover:text-white transition duration-200 hover:scale-[1.03]"
           >
             Ignore
           </button>
           <button
-            className="btn btn-secondary"
-            onClick={() => {
-              handleSendRequest("interested", _id);
-            }}
+            onClick={() => handleSendRequest("interested", _id)}
+            className="px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-green-400 to-blue-500 text-white shadow-md hover:scale-[1.05] transition-transform"
           >
-            Intrested
+            Interested
           </button>
         </div>
       </div>

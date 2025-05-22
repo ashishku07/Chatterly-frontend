@@ -18,29 +18,16 @@ const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
 
   const saveProfile = async () => {
-    //clearing the errors
     setError("");
     try {
       const res = await axios.post(
         BASE_URL + "/profile/edit",
-        {
-          firstName,
-          lastName,
-          photoURL,
-          age,
-          gender,
-          about,
-          skills,
-        },
-        {
-          withCredentials: true,
-        }
+        { firstName, lastName, photoURL, age, gender, about, skills },
+        { withCredentials: true }
       );
       dispatch(addUser(res.data.data));
       setShowToast(true);
-      setTimeout(() => {
-        setShowToast(false);
-      }, 3000);
+      setTimeout(() => setShowToast(false), 3000);
     } catch (error) {
       setError(error.response.data);
     }
@@ -48,126 +35,133 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className="flex justify-center  my-10 max ">
-        <div className="flex justify-center mx-10 ">
-          <div className="card bg-base-300 w-96 shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title justify-center">Edit Profile</h2>
-              <div>
-                <label className="form-control w-full max-w-xs my-2">
-                  <div className="label">
-                    <span className="label-text">First Name</span>
-                  </div>
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstname(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </label>
-                <label className="form-control w-full max-w-xs my-2">
-                  <div className="label">
-                    <span className="label-text">Last Name</span>
-                  </div>
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </label>
-                <label className="form-control w-full max-w-xs my-2">
-                  <div className="label">
-                    <span className="label-text">Age</span>
-                  </div>
-                  <input
-                    type="text"
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </label>
-                <label className="form-control w-full max-w-xs my-2">
-                  <div className="label">
-                    <span className="label-text">PhotoURL</span>
-                  </div>
-                  <input
-                    type="text"
-                    value={photoURL}
-                    onChange={(e) => setPhotoURL(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </label>
-                <label className="form-control w-full max-w-xs my-2">
-                  <div className="label">
-                    <span className="label-text">Gender</span>
-                  </div>
-                  <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn m-1">
-                      {gender || "Select gender"}
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-                    >
-                      <li>
-                        <button onClick={() => setGender("Male")}>Male</button>
-                      </li>
-                      <li>
-                        <button onClick={() => setGender("Female")}>
-                          Female
-                        </button>
-                      </li>
-                      <li>
-                        <button onClick={() => setGender("Others")}>
-                          Others
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </label>
-                <label className="form-control w-full max-w-xs my-2">
-                  <div className="label">
-                    <span className="label-text">Skills</span>
-                  </div>
-                  <input
-                    type="text"
-                    value={skills}
-                    onChange={(e) => setSkills(e.target.value.split(","))}
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </label>
+      <div className="min-h-screen pt-24 pb-10 px-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-base-content flex flex-col md:flex-row justify-center items-start gap-10">
+        {/* Edit Profile Form */}
+        <div className="bg-base-200 border border-base-300 rounded-xl shadow-lg p-8 w-full max-w-md h-full flex flex-col justify-between">
+          <h2 className="text-2xl font-bold mb-6 text-primary text-center">
+            Edit Your Profile
+          </h2>
+          <div className="space-y-4">
+            {/* First Name */}
+            <div>
+              <label className="label-text">First Name</label>
+              <input
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstname(e.target.value)}
+                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary transition"
+              />
+            </div>
 
-                <label className="form-control w-full max-w-xs my-2">
-                  <div className="label">
-                    <span className="label-text">About</span>
-                  </div>
-                  <textarea
-                    placeholder="Bio"
-                    type="text"
-                    value={about}
-                    onChange={(e) => setAbout(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
-                  ></textarea>
+            {/* Last Name */}
+            <div>
+              <label className="label-text">Last Name</label>
+              <input
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary transition"
+              />
+            </div>
+
+            {/* Age */}
+            <div>
+              <label className="label-text">Age</label>
+              <input
+                type="number"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary transition"
+              />
+            </div>
+
+            {/* Photo URL */}
+            <div>
+              <label className="label-text">Photo URL</label>
+              <input
+                type="text"
+                value={photoURL}
+                onChange={(e) => setPhotoURL(e.target.value)}
+                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary transition"
+              />
+            </div>
+
+            {/* Gender */}
+            <div>
+              <label className="label-text">Gender</label>
+              <div className="dropdown w-full">
+                <label tabIndex={0} className="btn w-full">
+                  {gender || "Select Gender"}
                 </label>
-              </div>
-              <p className="text-red-500 text-center">{error}</p>
-              <div className="card-actions justify-center mt-2">
-                <button className="btn btn-primary" onClick={saveProfile}>
-                  Save Profile
-                </button>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu bg-base-100 rounded-box w-full p-2 mt-2 shadow"
+                >
+                  <li>
+                    <button onClick={() => setGender("Male")}>Male</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setGender("Female")}>Female</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setGender("Others")}>Others</button>
+                  </li>
+                </ul>
               </div>
             </div>
+
+            {/* Skills */}
+            <div>
+              <label className="label-text">Skills</label>
+              <input
+                type="text"
+                value={skills.join(", ")}
+                onChange={(e) =>
+                  setSkills(e.target.value.split(",").map((s) => s.trim()))
+                }
+                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <p className="text-xs text-base-content/60 mt-1">
+                Separate multiple skills with commas
+              </p>
+            </div>
+
+            {/* About */}
+            <div>
+              <label className="label-text">About</label>
+              <textarea
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
+                placeholder="Tell us about yourself..."
+                className="textarea textarea-bordered w-full p-3 focus:outline-none focus:ring-2 focus:ring-primary transition"
+              />
+            </div>
+
+            {/* Error */}
+            {error && (
+              <p className="text-red-500 text-sm text-center">{error}</p>
+            )}
+
+            {/* Save Button */}
+            <button onClick={saveProfile} className="btn btn-primary w-full">
+              Save Profile
+            </button>
           </div>
         </div>
-        <UserCard
-          user={{ firstName, lastName, photoURL, about, age, gender, skills }}
-        />
+
+        {/* Live Preview */}
+        <div className="hidden md:block">
+          <UserCard
+            user={{ firstName, lastName, photoURL, about, age, gender, skills }}
+          />
+        </div>
       </div>
+
+      {/* Toast */}
       {showToast && (
-        <div className="toast toast-top toast-center pt-20 ">
-          <div className="alert alert-success">
-            <span>Profile saved successfully</span>
+        <div className="fixed bottom-6 right-6 z-50">
+          <div className="alert alert-success shadow-lg rounded-lg">
+            <span>✅ Profile saved successfully</span>
           </div>
         </div>
       )}

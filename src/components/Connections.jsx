@@ -6,8 +6,8 @@ import { addConnection, removeConnection } from "../utils/connectionSlice";
 
 const Connections = () => {
   const connections = useSelector((store) => store.connection);
-  console.log(connections);
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchConnections = async () => {
     try {
@@ -16,7 +16,6 @@ const Connections = () => {
         withCredentials: true,
       });
       dispatch(addConnection(connections.data.data));
-      //   console.log(connections.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -26,47 +25,112 @@ const Connections = () => {
     fetchConnections();
   }, []);
 
-  if (!connections) return;
-  if (connections.length == 0)
+  if (!connections) return null;
+
+  const filteredConnections = connections.filter((conn) => {
+    const fullName = `${conn.firstName} ${conn.lastName}`.toLowerCase();
+    const skillsString = conn.skills?.join(", ").toLowerCase() || "";
     return (
-      <>
-        <h1 className="flex justify-center text-2xl my-10 text-green-300">
-          No conections found
+      fullName.includes(searchTerm.toLowerCase()) ||
+      skillsString.includes(searchTerm.toLowerCase())
+    );
+  });
+
+  if (connections.length === 0)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <h1 className="text-2xl font-semibold text-primary-content">
+          No connections found. Try connecting with more developers!
         </h1>
-      </>
+      </div>
     );
 
   return (
-    <div className=" text-center my-10">
-      <h1 className="font-bold text-3xl text-pink-400">
-        Connections ({connections.length})
-      </h1>
-      {connections.map((connection) => {
-        const { _id, firstName, lastName, photoURL, age, gender, about } =
-          connection;
+    <div className="min-h-screen pt-24 pb-12 px-4 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-base-content">
+      {/* Title + Subtitle */}
+      <div className="text-center mb-6">
+        <h1 className="text-3xl font-extrabold text-primary">
+          Your Connections
+        </h1>
+        <p className="text-sm text-base-content/70 mt-1">
+          You have{" "}
+          <span className="text-primary font-semibold">
+            {connections.length}
+          </span>{" "}
+          connection{connections.length !== 1 ? "s" : ""}
+        </p>
+      </div>
 
-        return (
-          <div
-            key={_id}
-            className="flex items-center m-2 p-2  rounded-lg bg-base-300 w-1/2 mx-auto"
-          >
-            <div>
-              <img
-                alt="photo"
-                className="w-14 h-14 rounded-full object-contain"
-                src={photoURL}
-              />
-            </div>
-            <div className="text-left m-4 p-4 ">
-              <h2 className="font-bold text-xl">
-                {firstName + " " + lastName}
-              </h2>
-              {age && gender && <p>{age + " " + gender}</p>}
-              <p>{about}</p>
-            </div>
-          </div>
-        );
-      })}
+      {/* Search Bar */}
+      <div className="max-w-md mx-auto mb-10">
+        <input
+          type="text"
+          placeholder="Search by name or skill..."
+          className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      {/* Connection Cards */}
+      <div className="space-y-6 max-w-3xl mx-auto">
+        {filteredConnections.length > 0 ? (
+          filteredConnections.map((connection) => {
+            const {
+              _id,
+              firstName,
+              lastName,
+              photoURL,
+              age,
+              gender,
+              about,
+              skills = [],
+            } = connection;
+
+            return (
+              <div
+                key={_id}
+                className="flex flex-col md:flex-row items-start md:items-center gap-4 bg-base-200 border border-base-300 rounded-xl shadow-md p-4 hover:shadow-lg transition duration-300"
+              >
+                <img
+                  alt="photo"
+                  className="w-16 h-16 rounded-full object-cover border border-base-300"
+                  src={photoURL}
+                />
+                <div className="text-left">
+                  <h2 className="text-lg font-bold text-primary">
+                    {firstName} {lastName}
+                  </h2>
+                  {age && gender && (
+                    <p className="text-sm text-base-content/70">
+                      {age} years • {gender}
+                    </p>
+                  )}
+                  {about && (
+                    <p className="text-sm text-base-content/90 mt-1">{about}</p>
+                  )}
+                  {skills.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {skills.map((skill, idx) => (
+                        <span
+                          key={idx}
+                          className="bg-primary/10 text-primary px-2 py-1 text-xs rounded-full"
+                        >
+                          {skill.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <p className="text-center text-base-content/70">
+            No matches found for "{searchTerm}"
+          </p>
+        )}
+      </div>
     </div>
   );
 };

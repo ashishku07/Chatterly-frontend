@@ -1,4 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
@@ -11,7 +15,28 @@ import EditProfile from "./components/EditProfile";
 import Requests from "./components/Requests";
 import Connections from "./components/Connections";
 
+import { BASE_URL } from "./utils/constants";
+import { addUser } from "./utils/userSlice";
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const res = await axios.get(BASE_URL + "/profile/view", {
+          withCredentials: true,
+        });
+        dispatch(addUser(res.data)); // store user in Redux
+      } catch (err) {
+        console.log("User not logged in or session expired");
+        dispatch(addUser(null)); // optional fallback
+      }
+    };
+
+    checkLogin();
+  }, [dispatch]);
+
   return (
     <div
       data-theme="business"
@@ -20,7 +45,6 @@ function App() {
       <Router>
         <NavBar />
 
-        {/* This will grow to fill the space between navbar and footer */}
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
