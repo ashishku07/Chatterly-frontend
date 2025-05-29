@@ -3,6 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection, removeConnection } from "../utils/connectionSlice";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const connections = useSelector((store) => store.connection);
@@ -90,37 +91,49 @@ const Connections = () => {
             return (
               <div
                 key={_id}
-                className="flex flex-col md:flex-row items-start md:items-center gap-4 bg-base-200 border border-base-300 rounded-xl shadow-md p-4 hover:shadow-lg transition duration-300"
+                className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-base-200 border border-base-300 rounded-xl shadow-md p-4 hover:shadow-lg transition duration-300"
               >
-                <img
-                  alt="photo"
-                  className="w-16 h-16 rounded-full object-cover border border-base-300"
-                  src={photoURL}
-                />
-                <div className="text-left">
-                  <h2 className="text-lg font-bold text-primary">
-                    {firstName} {lastName}
-                  </h2>
-                  {age && gender && (
-                    <p className="text-sm text-base-content/70">
-                      {age} years • {gender}
-                    </p>
-                  )}
-                  {about && (
-                    <p className="text-sm text-base-content/90 mt-1">{about}</p>
-                  )}
-                  {skills.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {skills.map((skill, idx) => (
-                        <span
-                          key={idx}
-                          className="bg-primary/10 text-primary px-2 py-1 text-xs rounded-full"
-                        >
-                          {skill.trim()}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                <div className="flex items-start gap-4">
+                  <img
+                    alt="photo"
+                    className="w-16 h-16 rounded-full object-cover border border-base-300"
+                    src={photoURL}
+                  />
+                  <div>
+                    <h2 className="text-lg font-bold text-primary">
+                      {firstName} {lastName}
+                    </h2>
+                    {age && gender && (
+                      <p className="text-sm text-base-content/70">
+                        {age} years • {gender}
+                      </p>
+                    )}
+                    {about && (
+                      <p className="text-sm text-base-content/90 mt-1 line-clamp-2">
+                        {about}
+                      </p>
+                    )}
+                    {skills.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {skills.map((skill, idx) => (
+                          <span
+                            key={idx}
+                            className="bg-primary/10 text-primary px-2 py-1 text-xs rounded-full"
+                          >
+                            {skill.trim()}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-2 md:mt-0 md:self-start">
+                  <Link to={`/chat/${_id}`}>
+                    <button className="btn btn-sm bg-gradient-to-r from-primary to-secondary text-white border-none shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-200">
+                      💬 Chat
+                    </button>
+                  </Link>
                 </div>
               </div>
             );

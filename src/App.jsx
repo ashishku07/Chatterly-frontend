@@ -18,6 +18,8 @@ import Connections from "./components/Connections";
 import { BASE_URL } from "./utils/constants";
 import { addUser } from "./utils/userSlice";
 
+import Chat from "./components/Chat";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -54,20 +56,13 @@ function App() {
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/connections" element={<Connections />} />
+            <Route path="/chat/:targetUserId" element={<Chat />} />
           </Routes>
         </main>
 
         <Footer />
         <ScrollToTop />
       </Router>
-    </div>
-  );
-}
-
-export function TestComponent() {
-  return (
-    <div className="p-4 bg-primary text-primary-content">
-      This is a test component with the "business" theme.
     </div>
   );
 }
