@@ -26,16 +26,25 @@ const Connections = () => {
     fetchConnections();
   }, []);
 
-  if (!connections) return null;
-
-  const filteredConnections = connections.filter((conn) => {
-    const fullName = `${conn.firstName} ${conn.lastName}`.toLowerCase();
-    const skillsString = conn.skills?.join(", ").toLowerCase() || "";
+  if (!connections || connections.length === 0)
     return (
-      fullName.includes(searchTerm.toLowerCase()) ||
-      skillsString.includes(searchTerm.toLowerCase())
+      <div className="min-h-screen flex items-center justify-center">
+        <h1 className="text-2xl font-semibold text-primary-content">
+          No connections found. Try connecting with more developers!
+        </h1>
+      </div>
     );
-  });
+
+  const filteredConnections = connections
+    .filter((conn) => conn && conn.firstName && conn.lastName) // ✅ prevent nulls
+    .filter((conn) => {
+      const fullName = `${conn.firstName} ${conn.lastName}`.toLowerCase();
+      const skillsString = conn.skills?.join(", ").toLowerCase() || "";
+      return (
+        fullName.includes(searchTerm.toLowerCase()) ||
+        skillsString.includes(searchTerm.toLowerCase())
+      );
+    });
 
   if (connections.length === 0)
     return (

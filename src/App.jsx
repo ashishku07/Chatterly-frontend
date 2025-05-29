@@ -14,11 +14,13 @@ import Profile from "./components/Profile";
 import EditProfile from "./components/EditProfile";
 import Requests from "./components/Requests";
 import Connections from "./components/Connections";
+import SmartMatches from "./components/SmartMatches";
 
 import { BASE_URL } from "./utils/constants";
 import { addUser } from "./utils/userSlice";
 
 import Chat from "./components/Chat";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,9 +59,10 @@ function App() {
             <Route path="/requests" element={<Requests />} />
             <Route path="/connections" element={<Connections />} />
             <Route path="/chat/:targetUserId" element={<Chat />} />
+            <Route path="/smart-matches" element={<SmartMatches />} />
           </Routes>
         </main>
-
+        <Toaster position="top-right" reverseOrder={false} />
         <Footer />
         <ScrollToTop />
       </Router>

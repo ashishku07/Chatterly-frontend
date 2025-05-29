@@ -83,6 +83,9 @@ const Navbar = () => {
                     <Link to="/requests">Requests</Link>
                   </li>
                   <li>
+                    <Link to="/smart-matches">Smart Matches 💡</Link>
+                  </li>
+                  <li>
                     <button
                       onClick={handleLogout}
                       className="text-red-500 hover:text-red-400"
@@ -144,6 +147,9 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link to="/requests">Requests</Link>
+                </li>
+                <li>
+                  <Link to="/smart-matches">Smart Matches 💡</Link>
                 </li>
                 <li>
                   <button
