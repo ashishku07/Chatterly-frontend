@@ -20,7 +20,7 @@ const Chat = () => {
   const socketRef = useRef(null);
 
   const fetchChatMessages = async () => {
-    const chat = await axios.get(BASE_URL + "/api/chat/" + targetUserId, {
+    const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
       withCredentials: true,
     });
 
