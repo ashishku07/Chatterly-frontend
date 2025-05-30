@@ -5,6 +5,7 @@ import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
 import { removeFeed } from "../utils/feedSlice";
 import { FiLock } from "react-icons/fi"; // Feather lock icon
+import { FiUser, FiUsers, FiInbox } from "react-icons/fi";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
@@ -74,16 +75,28 @@ const Navbar = () => {
                   className="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow-lg bg-base-100 rounded-box w-52 border border-base-300"
                 >
                   <li>
-                    <Link to="/profile">Profile</Link>
+                    <Link to="/profile">
+                      <FiUser className="inline mr-2" />
+                      Profile
+                    </Link>
                   </li>
                   <li>
-                    <Link to="/connections">Connections</Link>
+                    <Link to="/connections">
+                      <FiUsers className="inline mr-2" />
+                      Connections
+                    </Link>
                   </li>
                   <li>
-                    <Link to="/requests">Requests</Link>
+                    <Link to="/requests">
+                      <FiInbox className="inline mr-2" />
+                      Requests
+                    </Link>
                   </li>
                   <li>
                     <Link to="/smart-matches">Smart Matches 💡</Link>
+                  </li>
+                  <li>
+                    <Link to="/assistant">AI Assistant 🤖</Link>
                   </li>
                   <li>
                     <button
@@ -140,16 +153,28 @@ const Navbar = () => {
             {user ? (
               <>
                 <li>
-                  <Link to="/profile">Profile</Link>
+                  <Link to="/profile">
+                    <FiUser className="inline mr-2" />
+                    Profile
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/connections">Connections</Link>
+                  <Link to="/connections">
+                    <FiUsers className="inline mr-2" />
+                    Connections
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/requests">Requests</Link>
+                  <Link to="/requests">
+                    <FiInbox className="inline mr-2" />
+                    Requests
+                  </Link>
                 </li>
                 <li>
                   <Link to="/smart-matches">Smart Matches 💡</Link>
+                </li>
+                <li>
+                  <Link to="/assistant">AI Assistant 🤖</Link>
                 </li>
                 <li>
                   <button

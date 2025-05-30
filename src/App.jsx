@@ -15,6 +15,8 @@ import EditProfile from "./components/EditProfile";
 import Requests from "./components/Requests";
 import Connections from "./components/Connections";
 import SmartMatches from "./components/SmartMatches";
+// import AIAssistant from "./components/AIAssistant";
+import Assistant from "./pages/Assistant";
 
 import { BASE_URL } from "./utils/constants";
 import { addUser } from "./utils/userSlice";
@@ -60,6 +62,8 @@ function App() {
             <Route path="/connections" element={<Connections />} />
             <Route path="/chat/:targetUserId" element={<Chat />} />
             <Route path="/smart-matches" element={<SmartMatches />} />
+            {/* <Route path="/assistant" element={<AIAssistant />} /> */}
+            <Route path="/assistant" element={<Assistant />} />
           </Routes>
         </main>
         <Toaster position="top-right" reverseOrder={false} />

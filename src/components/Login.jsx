@@ -162,6 +162,13 @@ const Login = () => {
           </p>
         </form>
       </div>
+      <a
+        href="/assistant"
+        className="fixed bottom-20 right-6 z-[9999] w-14 h-14 flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-2xl rounded-full shadow-lg hover:scale-110 transition-transform duration-300"
+        title="AI Assistant"
+      >
+        🤖
+      </a>
     </div>
   );
 };
